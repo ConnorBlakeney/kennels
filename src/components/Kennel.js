@@ -2,10 +2,11 @@ import React from "react"
 import { LocationProvider } from "./location/LocationProvider";
 import { LocationList } from "./location/LocationList";
 import { Employee } from "./employee/Employee";
-import { Customer } from "./customer/Customer";
 import "./animal/Animal.css"
 import { AnimalList } from "./animal/AnimalList";
 import { AnimalProvider } from "./animal/AnimalProvider";
+import { CustomerList } from "./customer/CustomerList";
+import { CustomerProvider } from "./customer/CustomerProvider";
 
 export const Kennel = () => (
     <>
@@ -35,11 +36,8 @@ export const Kennel = () => (
         </article>
 
         <h2>Customers</h2>
-        <article className="customers">
-            <Customer />
-            <Customer />
-            <Customer />
-            <Customer />
-        </article>
+            <CustomerProvider>
+                <CustomerList />
+            </CustomerProvider>
     </>
 )
