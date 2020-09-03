@@ -27,6 +27,8 @@ export const AnimalList = () => {
                     return <section key={animal.id} className="animal">
                         <div><h3>{animal.name}</h3></div>
                         <div>{animal.breed}</div>
+                        <div>{animal.customerId}</div>
+                        <div>{animal.locationId}</div>
                     </section>
                 })
             }
