@@ -1,32 +1,25 @@
 import React, { useContext, useEffect } from "react"
 import { EmployeeContext } from "./EmployeeProvider";
+import { LocationContext } from "../location/LocationProvider";
 import "./Employee.css"
 
 export const EmployeeList = () => {
     const {employees, getEmployees} = useContext(EmployeeContext)
+    const {locations, getLocations} = useContext(LocationContext)
 
     useEffect(() => {
             console.log(" **** employees before state pulled from API  ****")
-            getEmployees()
+            getEmployees().then(getLocations)
         }, [])
-
-    /*
-        eventHub.addeventListener("employeestateChanged", event => {
-            console.log(" **** employees after state pulled from API  ****")
-        })
-    */
-    useEffect(() => {
-       console.log(" **** employees after state pulled from API  ****")
-    }, [employees])
-
 
     return (
         <article className="employees">
             {
                 employees.map((employee) => {
+                    const station = locations.find(location => location.id === employee.locationId) || 1
                     return <section key={employee.id} className="employee">
                         <div><h3>{employee.name}</h3></div>
-                        <div>{employee.locationId}</div>
+                        <div>{station.name}</div>
                     </section>
                 })
             }
