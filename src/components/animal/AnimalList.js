@@ -1,22 +1,15 @@
 import React, { useContext, useEffect } from "react"
 import { AnimalContext } from "./AnimalProvider";
-import { CustomerContext } from "./CustomerProvider";
 import "./Animal.css"
+import { CustomerContext } from "../customer/CustomerProvider.js";
 
 export const AnimalList = () => {
-    const {animals, getAnimals} = useContext(AnimalContext)
-    const {customers, getCustomers} = useContext(CustomerContext)
+    const { animals, getAnimals } = useContext(AnimalContext)
+    const { customers, getCustomers } = useContext(CustomerContext)
 
     useEffect(() => {
-            console.log(" **** animals before state pulled from API  ****")
-            getAnimals().then(getCustomers)
-        }, [])
-
-    /*
-        eventHub.addeventListener("animalstateChanged", event => {
-            console.log(" **** animals after state pulled from API  ****")
-        })
-    */
+        getAnimals().then(getCustomers)
+    }, [])
 
     return (
         <article className="animals">
@@ -27,7 +20,7 @@ export const AnimalList = () => {
                         <div><h3>{animal.name}</h3></div>
                         <div>{animal.breed}</div>
                         <div>Owner: {owner.name}</div>
-                        <div>{animal.locationId}</div>
+                        <div>Location: {animal.locationId}</div>
                     </section>
                 })
             }
