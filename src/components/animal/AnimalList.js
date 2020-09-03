@@ -2,13 +2,15 @@ import React, { useContext, useEffect } from "react"
 import { AnimalContext } from "./AnimalProvider";
 import "./Animal.css"
 import { CustomerContext } from "../customer/CustomerProvider.js";
+import { LocationContext } from "../location/LocationProvider.js";
 
 export const AnimalList = () => {
     const { animals, getAnimals } = useContext(AnimalContext)
     const { customers, getCustomers } = useContext(CustomerContext)
+    const { locations, getLocations } = useContext(LocationContext)
 
     useEffect(() => {
-        getAnimals().then(getCustomers)
+        getAnimals().then(getCustomers).then(getLocations)
     }, [])
 
     return (
@@ -16,11 +18,12 @@ export const AnimalList = () => {
             {
                 animals.map(animal => {
                     const owner = customers.find(customer => customer.id === animal.customerId) || {}
+                    const clinic = locations.find(location => location.id === animal.locationId) || {}
                     return <section key={animal.id} className="animal">
                         <div><h3>{animal.name}</h3></div>
-                        <div>{animal.breed}</div>
+                        <div>Breed: {animal.breed}</div>
                         <div>Owner: {owner.name}</div>
-                        <div>Location: {animal.locationId}</div>
+                        <div>Location: {clinic.name} at {clinic.address}</div>
                     </section>
                 })
             }
