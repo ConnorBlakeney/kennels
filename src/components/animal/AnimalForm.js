@@ -1,67 +1,58 @@
 import React, { useContext, useRef, useEffect } from "react"
-import { EmployeeContext } from "./EmployeeProvider"
-import { LocationContext } from "../location/LocationProvider"
-import { AnimalContext } from "../animal/AnimalProvider"
-import "./Employee.css"
+import { CustomerContext } from "../customer/CustomerProvider.js"
+import { LocationContext } from "../location/LocationProvider.js"
+import { AnimalContext } from "./AnimalProvider"
+import "./Animals.css"
 
 export const AnimalForm = (burrito) => {
     const { addAnimal } = useContext(AnimalContext)
+    const { customers, getCustomers } = useContext(CustomerContext)
     const { locations, getLocations } = useContext(LocationContext)
-    const { employees, getEmployees } = useContext(EmployeeContext)
 
-    /*
-        Create references that can be attached to the input
-        fields in the form. This will allow you to get the
-        value of the input fields later when the user clicks
-        the save button.
-        No more `document.querySelector()` in React.
-    */
     const name = useRef(null)
-    const location = useRef(null)
     const customer = useRef(null)
+    const location = useRef(null)
+    const breed = useRef(null)
 
-    /*
-        Get animal state and location state on initialization.
-    */
     useEffect(() => {
-       getEmployees().then(getLocations)
+        getLocations()
+        getCustomers()
     }, [])
 
-    const constructNewEmployee = () => {
-        /*
-            The `location` and `animal` variables below are
-            the references attached to the input fields. You
-            can't just ask for the `.value` property directly,
-            but rather `.current.value` now in React.
-        */
-        const locationId = parseInt(location.current.value)
-        const customerId = parseInt(customer.current.value)
 
-        if (locationId === 0) {
-            window.alert("Please select a location")
-        } else {
-            addAnimal({
-                name: name.current.value,
-                locationId,
-                customerId
-            })
-            .then(() => burrito.history.push("/employees"))
+    const admitAnimal = () => {
+        const newAnimal = {
+            name: name.current.value,
+            breed: breed.current.value,
+            locationId: parseInt(location.current.value),
+            treatment: "",
+            customerId: parseInt(customer.current.value)
         }
+
+        addAnimal(newAnimal).then(() => {
+            burrito.history.push("/animals")
+        })
     }
 
+
     return (
-        <form className="employeeForm">
-            <h2 className="employeeForm__title">New Employee</h2>
+        <form>
             <fieldset>
                 <div className="form-group">
-                    <label htmlFor="employeeName">Employee name: </label>
-                    <input type="text" id="employeeName" ref={name} required autoFocus className="form-control" placeholder="Employee name" />
+                    <label htmlFor="animalName">Animal name: </label>
+                    <input type="text" id="animalName" ref={name} required autoFocus className="form-control" placeholder="Animal name" />
+                </div>
+            </fieldset>
+            <fieldset>
+                <div className="form-group">
+                    <label htmlFor="breed">Breed: </label>
+                    <input type="text" id="breed" ref={breed} required autoFocus className="form-control" placeholder="Breed of animal" />
                 </div>
             </fieldset>
             <fieldset>
                 <div className="form-group">
                     <label htmlFor="location">Assign to location: </label>
-                    <select defaultValue="" name="location" ref={location} id="employeeLocation" className="form-control" >
+                    <select defaultValue="" name="location" ref={location} id="animalLocation" className="form-control" >
                         <option value="0">Select a location</option>
                         {locations.map(e => (
                             <option key={e.id} value={e.id}>
@@ -73,12 +64,12 @@ export const AnimalForm = (burrito) => {
             </fieldset>
             <fieldset>
                 <div className="form-group">
-                    <label htmlFor="location">Caretaker for: </label>
-                    <select defaultValue="" name="animal" ref={animal} id="employeeAnimal" className="form-control" >
-                        <option value="0">Select an animal</option>
-                        {animals.map(e => (
-                            <option key={e.id} value={e.id}>
-                                {e.name}
+                    <label htmlFor="customer">Brought in by: </label>
+                    <select defaultValue="" name="customer" ref={customer} className="form-control" >
+                        <option value="0">Select a customer</option>
+                        {customers.map(customer => (
+                            <option key={customer.id} value={customer.id}>
+                                {customer.name}
                             </option>
                         ))}
                     </select>
@@ -86,11 +77,11 @@ export const AnimalForm = (burrito) => {
             </fieldset>
             <button type="submit"
                 onClick={evt => {
-                    evt.preventDefault() // Prevent browser from submitting the form
-                    constructNewEmployee()
+                    evt.preventDefault()
+                    admitAnimal()
                 }}
                 className="btn btn-primary">
-                Save Employee
+                Admit Animal
             </button>
         </form>
     )
