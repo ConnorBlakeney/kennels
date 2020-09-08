@@ -5,7 +5,7 @@ import { AnimalContext } from "./AnimalProvider"
 import "./Animals.css"
 
 export const AnimalForm = (burrito) => {
-    const { addAnimal } = useContext(AnimalContext)
+    const { addAnimals } = useContext(AnimalContext)
     const { customers, getCustomers } = useContext(CustomerContext)
     const { locations, getLocations } = useContext(LocationContext)
 
@@ -29,7 +29,7 @@ export const AnimalForm = (burrito) => {
             customerId: parseInt(customer.current.value)
         }
 
-        addAnimal(newAnimal).then(() => {
+        addAnimals(newAnimal).then(() => {
             burrito.history.push("/animals")
         })
     }

@@ -60,11 +60,13 @@ export const ApplicationViews = (props) => {
             </EmployeeProvider>
 
             <EmployeeProvider>
-                <LocationProvider>
-                    <Route exact path="/employees" render={(props) => {
-                        return <EmployeeList history={props.history} />
-                    }} />
+                <AnimalProvider>
+                    <LocationProvider>
+                        <Route exact path="/employees" render={(props) => {
+                            return <EmployeeList history={props.history} />
+                        }} />
                 </LocationProvider>
+                </AnimalProvider>
             </EmployeeProvider>
         </>
     )
