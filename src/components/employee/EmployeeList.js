@@ -1,37 +1,32 @@
 import React, { useContext, useEffect } from "react"
-import { EmployeeContext } from "./EmployeeProvider";
-import { LocationContext } from "../location/LocationProvider.js";
-import { AnimalContext } from "../animal/AnimalProvider.js";
+import { EmployeeContext } from "./EmployeeProvider"
+import { Link } from "react-router-dom"
 import "./Employees.css"
 
-export const EmployeeList = (burrito) => {
+export const EmployeeList = props => {
     const { employees, getEmployees } = useContext(EmployeeContext)
-    const { locations, getLocations } = useContext(LocationContext)
-    const { animals, getAnimals } = useContext(AnimalContext)
 
     useEffect(() => {
-        getEmployees().then(getLocations).then(getAnimals)
+        getEmployees()
     }, [])
 
     return (
-        <>
-            <button onClick={() => burrito.history.push("/employees/create")}>
+        <div className="employees">
+            <h1>Employees</h1>
+
+            <button onClick={() => props.history.push("/employees/create")}>
                 Add Employee
             </button>
-            <article className="employees">
+
+            <article className="employeeList">
                 {
                     employees.map(employee => {
-                        const employeeLocation = locations.find(loc => loc.id === employee.locationId) || {}
-                        const employeeAnimal = animals.find(a => a.id === employee.animalId) || {}
-                        return <section key={employee.id} className="employee">
-                            <div><h3>{employee.name}</h3></div>
-                            <div>Location: {employeeLocation.name}</div>
-                            <div>Caretaking: {employeeAnimal.name}</div>
-                        </section>
+                        return <Link key={employee.id} to={`/employees/${employee.id}`}>
+                            <h3>{employee.name}</h3>
+                        </Link>
                     })
                 }
             </article>
-        </>
+        </div>
     )
-
 }
