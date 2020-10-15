@@ -1,19 +1,19 @@
 import React, { useContext } from "react"
 import { AnimalContext } from "./AnimalProvider"
-import "./Animals.css"
 
-export const AnimalSearch = (props) => {
-    const { setSearch } = useContext(AnimalContext)
+export const AnimalSearch = () => {
+    const { setTerms } = useContext(AnimalContext)
 
     return (
         <>
-            Animal search:
-            <input type="text"
-                className="input--wide"
-                onKeyUp={
-                    (keyEvent) => setSearch(keyEvent.target.value)
+            <div>Search for an animal</div>
+            <input type="text" className="animals__search"
+                onChange={
+                    (changeEvent) => {
+                        setTerms(changeEvent.target.value)
+                    }
                 }
-                placeholder="Search for an animal... " />
+                placeholder="Enter search string here..." />
         </>
     )
 }

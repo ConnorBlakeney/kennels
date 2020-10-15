@@ -18,7 +18,7 @@ export const EmployeeProvider = (props) => {
             .then(setEmployees)
     }
 
-    const addEmployees = employee => {
+    const addEmployee = employee => {
         return fetch("http://localhost:8088/employees", {
             method: "POST",
             headers: {
@@ -31,13 +31,13 @@ export const EmployeeProvider = (props) => {
 
     /*
         You return a context provider which has the
-        `employees` state, the `addEmployees` function,
-        and the `getLocation` function as keys. This
+        `Employees` state, the `addEmployee` function,
+        and the `getEmployee` function as keys. This
         allows any child elements to access them.
     */
     return (
         <EmployeeContext.Provider value={{
-            employees, addEmployees, getEmployees
+            employees, addEmployee, getEmployees
         }}>
             {props.children}
         </EmployeeContext.Provider>

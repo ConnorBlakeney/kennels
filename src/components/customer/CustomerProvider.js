@@ -18,7 +18,7 @@ export const CustomerProvider = (props) => {
             .then(setCustomers)
     }
 
-    const addCustomers = customer => {
+    const addCustomer = customer => {
         return fetch("http://localhost:8088/customers", {
             method: "POST",
             headers: {
@@ -31,13 +31,13 @@ export const CustomerProvider = (props) => {
 
     /*
         You return a context provider which has the
-        `customers` state, the `addCustomers` function,
-        and the `getLocation` function as keys. This
+        `customers` state, the `addCustomer` function,
+        and the `getCustomer` function as keys. This
         allows any child elements to access them.
     */
     return (
         <CustomerContext.Provider value={{
-            customers, addCustomers, getCustomers
+            customers, addCustomer, getCustomers
         }}>
             {props.children}
         </CustomerContext.Provider>

@@ -15,9 +15,9 @@ export const EmployeeDetail = (props) => {
     const [location, setLocation] = useState({})
 
     useEffect(() => {
-        getEmployees()
+        getLocations()
+            .then(getEmployees)
             .then(getAnimals)
-            .then(getLocations)
     }, [])
 
     useEffect(() => {

@@ -11,19 +11,21 @@ export const EmployeeList = props => {
     }, [])
 
     return (
-        <div className="employees">
+        <div style={{ margin: "0rem 3rem"}}>
             <h1>Employees</h1>
 
             <button onClick={() => props.history.push("/employees/create")}>
                 Add Employee
             </button>
 
-            <article className="employeeList">
+            <article className="employees">
                 {
                     employees.map(employee => {
-                        return <Link key={employee.id} to={`/employees/${employee.id}`}>
-                            <h3>{employee.name}</h3>
-                        </Link>
+                        return <section className="employee" key={employee.id}>
+                            <Link to={`/employees/${employee.id}`}>
+                                <h3>{employee.name}</h3>
+                            </Link>
+                        </section>
                     })
                 }
             </article>
